@@ -19,7 +19,8 @@
   },
   "homepage": "https://github.com/IgorFollador/uri-audioNotes-api#readme",
   "devDependencies": {
-    "nodemon": "^2.0.22"
+    "nodemon": "^2.0.22",
+    "sequelize-cli": "^6.6.0"
   },
   "dependencies": {
     "dotenv": "^16.0.3",
