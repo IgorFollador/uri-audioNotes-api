@@ -27,7 +27,33 @@ class UserController {
 
             return res.status(201).json(userDTO);
         } catch (error) {
-            return res.status(500).json({ message: error.message })
+            return res.status(500).json({ message: error.message });
+        }
+    }
+
+    static async update(req, res) {
+        try {
+            const userId = req.userId;
+
+            if (userId.error) return res.status(401).json({ message: userId.error });
+            
+            const userForm = req.body;
+            if (userForm == null) return res.status(422).json({ message: 'Data not found' });
+
+            const user = await database.User.findByPk(userId);
+            if(user == null) return res.status(404).json({ message: 'User not found' });
+
+            if (userForm.password) delete userForm.password;
+
+            await database.User.update(userForm, {
+                where: {
+                    id: Number(userId)
+                }
+            })
+            
+            return res.status(200).json({ message: `User with ID ${userId} updated` });
+        } catch (error) {
+            return res.status(500).json({ message: error.message });
         }
     }
 
