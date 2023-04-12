@@ -1,4 +1,4 @@
-const authenticationRoutes = require('./authenticationRoutes');
+const publicRoutes = require('./publicRoutes');
 const userRoutes = require('./userRoutes');
 const jwt = require('jsonwebtoken');
 
@@ -8,8 +8,7 @@ module.exports = (app, express) => {
 
     app.get('/', (req, res) => res.send('Welcome to API-AudioNotes'));
     
-    app.use(authenticationRoutes);
-    app.use(userRoutes);
+    app.use(publicRoutes);
 
     // ONLY AUTHENTICATE ACCESS
     app.use((req, res, next) => {
@@ -19,8 +18,11 @@ module.exports = (app, express) => {
     
         jwt.verify(token, process.env.JWT_SECRET, (err, payload) => {
             if(err) return res.sendStatus(401);
-            req.userId = payload;
+            req.userId = payload.userId;
             next();
         })
     })
+
+    app.use(userRoutes);
+    
 }
