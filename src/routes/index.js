@@ -1,5 +1,6 @@
 const publicRoutes = require('./publicRoutes');
 const userRoutes = require('./userRoutes');
+const conversationRoutes = require('./conversationRoutes');
 const jwt = require('jsonwebtoken');
 
 module.exports = (app, express) => {
@@ -24,5 +25,5 @@ module.exports = (app, express) => {
     })
 
     app.use(userRoutes);
-    
+    app.use(conversationRoutes);
 }
