@@ -91,7 +91,7 @@ class ConversationController {
             });
 
             const messages = await database.Message.findAll({ 
-                attributes: ['content', 'createdAt'],
+                attributes: ['id', 'content', 'createdAt'],
                 where: { conversation_id: id },
                 raw: true
             });

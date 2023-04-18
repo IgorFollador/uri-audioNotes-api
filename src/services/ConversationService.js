@@ -58,9 +58,16 @@ class ConversationService {
         }
     }
 
-    static createNameByText(content) {
+    static createNameByText(content, maxLength = 5) {
         const contentArray = content.split(' ')
-        return  contentArray[0] + " " + contentArray[1] + " " + contentArray[2];
+        let name = "";
+        let i = 0; 
+        contentArray.forEach(content => {
+            if (i == maxLength) return false;
+            name += content + " ";
+            i++;
+        })
+        return name.trimEnd();
     }
 
 }
