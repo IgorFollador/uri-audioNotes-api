@@ -46,6 +46,86 @@ class ConversationController {
         }
     }
 
+    static async readAll(req, res) {
+        try {
+            const userId = req.userId;
+
+            const conversations = await database.Conversation.findAll({ 
+                include: {
+                    model: database.Category,
+                    attributes: ['id', 'name']
+                },
+                attributes: ['id','name'],
+                where: { user_id: userId }
+            });
+
+            let allConversations = [];
+
+            conversations.forEach(conversation => {
+                let conversationData = {};
+            
+                conversationData.conversation_id = conversation.id;
+                conversationData.conversation_name = conversation.name;
+                conversationData.category_name = conversation.Category.name;
+                
+                allConversations.push(conversationData);
+            });
+
+            return res.status(200).send(allConversations);
+        } catch (error) {
+            return res.status(500).send({ message: error.message })
+        }
+    }
+
+    static async readConversation(req, res) {
+        try {
+            const { id } = req.params;
+
+            const conversation = await database.Conversation.findOne({ 
+                include: {
+                    model: database.Category,
+                    attributes: ['id', 'name']
+                },
+                attributes: ['id','name'],
+                where: { id: id }
+            });
+
+            const messages = await database.Message.findAll({ 
+                attributes: ['content', 'createdAt'],
+                where: { conversation_id: id },
+                raw: true
+            });
+            
+            let allMessages = [];
+
+            messages.forEach(message => {
+                let messageData = {};
+                const messageDate = dates.formatToDMY(message.createdAt.toISOString().split('T')[0]);
+                const time = message.createdAt.toISOString().split('T')[1];
+                const messageTime = (time.split(':')[0] - 3)+ ":" + time.split(':')[1];
+
+                messageData.id = message.id;
+                messageData.content = message.content;
+                messageData.messageDate = messageDate;
+                messageData.messageTime = messageTime; 
+                
+                allMessages.push(messageData);
+            });
+
+
+            const responseData = {
+                conversation_id: conversation.id,
+                conversation_name: conversation.name,
+                category_name: conversation.Category.name,
+                messages: allMessages
+            }
+
+            return res.status(200).send(responseData);
+        } catch (error) {
+            return res.status(500).send({ message: error.message })
+        }
+    }
+
     static async verifyCategory(req, res) {
         try {
             const data = req.body;
