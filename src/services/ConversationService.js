@@ -34,10 +34,10 @@ class ConversationService {
                 categoryId = 2;
                 break;
             case 'casa':
-                categoryId = 2;
+                categoryId = 3;
                 break;
             case 'trabalho':
-                categoryId = 3;
+                categoryId = 4;
                 break;
             default:
                 categoryId = 1;
