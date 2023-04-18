@@ -10,7 +10,7 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       content: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING(1000)
       },
       conversation_id: {
         type: Sequelize.INTEGER

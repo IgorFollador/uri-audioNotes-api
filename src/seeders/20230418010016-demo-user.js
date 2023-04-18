@@ -18,7 +18,7 @@ module.exports = {
       lastName: 'Bassanesi',
       phone: '54992026787',
       email: 'jaisson@bassanesi.com',
-      password: '$10$c7GoCVsIG64aE1VuCkknSurN0lJtF2zqa0zDIOIm5Hqamwghr/sVu',
+      password: '$2b$10$DYfI9JhEdhZxFXpmq5CBVOn1SMZn9bEwE8xCZIg/yYQvz.vThX03u',
       createdAt: new Date(),
       updatedAt: new Date()
     },
