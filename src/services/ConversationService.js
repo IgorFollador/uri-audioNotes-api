@@ -3,7 +3,7 @@ const trainingData = require('../../trainingData.json');
 const natural = require("natural"); 
 class ConversationService {
     
-    static createCategory(data) {
+    static verifyCategory(data) {
         // Defining the categories
         const categories = new natural.BayesClassifier();
 
@@ -22,8 +22,45 @@ class ConversationService {
 
        // Sorting a text
         const category = classifier.classify(data);
-
+        
         return category;
+    }
+
+    static createConversationForm(name, categoryAlias, userId) {
+        let categoryId;
+        
+        switch (categoryAlias) {
+            case 'estudo':
+                categoryId = 2;
+                break;
+            case 'casa':
+                categoryId = 2;
+                break;
+            case 'trabalho':
+                categoryId = 3;
+                break;
+            default:
+                categoryId = 1;
+                break;
+        }
+
+       return {
+            name: name,
+            category_id: categoryId,
+            user_id: userId
+        };
+    }
+
+    static createMessageForm(content, conversation_id) {
+        return {
+            content: content,
+            conversation_id: conversation_id
+        }
+    }
+
+    static createNameByText(content) {
+        const contentArray = content.split(' ')
+        return  contentArray[0] + " " + contentArray[1] + " " + contentArray[2];
     }
 
 }
