@@ -56,7 +56,8 @@ class ConversationController {
                     attributes: ['id', 'name']
                 },
                 attributes: ['id','name'],
-                where: { user_id: userId }
+                where: { user_id: userId },
+                order: [['createdAt', 'DESC']]
             });
 
             let allConversations = [];

@@ -58,7 +58,7 @@ class ConversationService {
         }
     }
 
-    static createNameByText(content, maxLength = 5) {
+    static createNameByText(content, maxLength = 3) {
         const contentArray = content.split(' ')
         let name = "";
         let i = 0; 
