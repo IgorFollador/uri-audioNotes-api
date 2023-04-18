@@ -57,6 +57,29 @@ class UserController {
         }
     }
 
+    static async read(req, res) {
+        try {
+            const userId = req.userId;
+
+            if (userId.error) return res.status(401).json({ message: userId.error });
+
+            const user = await database.User.findByPk(userId, {exclude: ['password']});
+            if(user == null) return res.status(404).json({ message: 'User not found' });
+
+            const responseData = {
+                id: user.id,
+                firstName: user.firstName,
+                lastName: user.lastName,
+                email: user.email,
+                phone: user.phone
+            }
+
+            return res.status(200).json(responseData);
+        } catch (error) {
+            return res.status(500).json({ message: error.message });
+        }
+    }
+
 }
 
 module.exports = UserController;
