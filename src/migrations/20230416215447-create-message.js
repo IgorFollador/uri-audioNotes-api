@@ -12,6 +12,9 @@ module.exports = {
       content: {
         type: Sequelize.STRING
       },
+      conversation_id: {
+        type: Sequelize.INTEGER
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE
